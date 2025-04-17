@@ -1,7 +1,6 @@
 ============================================================CREATE BY ERITO================================================================
 //DISCLAMER: audio kemungkinan akan menghasilkan error karena browser modern memiliki kebijakan autoplay yang ketat. Sebagian besar browser (seperti Chrome, Firefox, dan Safari) tidak mengizinkan pemutaran audio otomatis tanpa interaksi pengguna. Oleh karena itu untuk kenyamanan dalam bermain game, bisa dimainkan didalam vscode dan lakukan go live.
 
-demoPresentation : https://drive.google.com/drive/folders/1rxURX3BZs6cN-r1XEpjPQ4-QvOdHjq_P
 Nama Game: UMN - Udin Menjelajahi Negara.
 
 
