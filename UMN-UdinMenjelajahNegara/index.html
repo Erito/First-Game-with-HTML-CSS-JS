@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UMN - UDIN MENJELAJAH NEGARA</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="./index.css">
+</head>
+
+<!-- ============================================================CREATE BY ERITO================================================================ -->
+<body>
+    <audio id="background-music" src="./asset/character/music.mp3" loop></audio>
+    <div><!--UTAMA-->
+        <div><!--ATAS-->
+            <img src="./asset/character/pesawat.png" class="w-50 m-auto mb-5">
+            <h2 class="font-mono text-center mb-5">UMN - UDIN MENJELAJAH NEGARA</h2>
+        </div>
+        <hr>
+
+        <!-- PILIH CHARACTER -->
+        <div class="text-center p-6 rounded-lg shadow-lg bg-gradient-to-b from-blue-500 to-green-500 h-95 w-full mt-10">
+            <div class="flex items-center justify-center mb-4">
+                <main class="Container">
+                    <div class="Character"></div>
+                    <div class="Navigation flex-center"></div>
+                    <button class="NextSpritesheetButton NextSpritesheetButton--prev" onclick="setPreviousActive()">
+                        <svg viewBox="0 -0.5 4 7" shape-rendering="crispEdges">
+                            <path stroke="#434343" d="M3 0h1M2 1h1M1 2h1M0 3h1M1 4h1M2 5h1M3 6h1" />
+                        </svg>
+                    </button>
+                    <button class="NextSpritesheetButton NextSpritesheetButton--next" onclick="setNextActive()">
+                        <svg viewBox="0 -0.5 4 7" shape-rendering="crispEdges">
+                            <path stroke="#434343" d="M0 0h1M1 1h1M2 2h1M3 3h1M2 4h1M1 5h1M0 6h1" />
+                        </svg>
+                    </button>
+                </main>
+            </div>
+            <form id="characterForm">
+                <input type="text" id="playerName" placeholder="Enter your name here..."
+                    class="w-full p-2 border border-gray-300 rounded mb-4">
+                <button type="submit" class="w-full bg-black text-white py-2 rounded">Start Exploring</button>
+            </form>
+        </div>
+    </div>
+    </div>
+
+<!-- ============================================================CREATE BY ERITO================================================================ -->
+    <script>
+        // CHARACTERNYA
+        var characterElement = document.querySelector(".Character");
+        var spritesheets = [
+            "./asset/character/char1.png",
+            "./asset/character/char2.png",
+            "./asset/character/char3.png",
+            "./asset/character/char4.png",
+            "./asset/character/char5.png",
+        ];
+
+        let activeIndex = 0;
+        let spritesheetElements = "";
+        let navigationElements = "";
+
+        spritesheets.forEach((spritesheet, index) => {
+            spritesheetElements += `<link url="${spritesheet}" class="PixelArtImage Character_sprite-sheet index-${index}" />`
+            navigationElements += `<button class="NavigationBubble index-${index}" onclick='setActive(${index})' />`
+        });
+        characterElement.insertAdjacentHTML('beforeend', spritesheetElements);
+        document.querySelector(".Navigation").insertAdjacentHTML('beforeend', navigationElements);
+
+        function setActive(index) {
+            activeIndex = index;
+            document.querySelectorAll(`.active`).forEach(node => {
+                node.classList.remove("active")
+            })
+            document.querySelectorAll(`.index-${index}`).forEach(node => {
+                node.classList.add("active")
+            })
+        }
+        function setActive(index) {
+            activeIndex = index;
+            document.querySelectorAll(`.Character_sprite-sheet`).forEach((node, i) => {
+                node.style.display = "none";
+                node.style.animation = "none"; // Reset animasi
+            });
+            document.querySelectorAll(`.active`).forEach(node => {
+                node.classList.remove("active")
+            })
+            document.querySelectorAll(`.index-${index}`).forEach(node => {
+                node.classList.add("active")
+            })
+            let activeNode = document.querySelector(`.index-${index}`);
+            activeNode.style.display = "block";
+            activeNode.style.animation = "walkAnimation 0.6s steps(4) infinite";
+            activeNode.style.backgroundImage = `url(${spritesheets[index]})`;
+        }
+
+
+        // NAVIGASI PILIH CHARACTER
+        function setPreviousActive() {
+            activeIndex = activeIndex > 0 ? activeIndex - 1 : spritesheets.length - 1;
+            setActive(activeIndex)
+        }
+        function setNextActive() {
+            activeIndex = activeIndex < spritesheets.length - 1 ? activeIndex + 1 : 0;
+            setActive(activeIndex)
+        }
+        document.getElementById("characterForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+            // Ambil nama pemain & character trus masukin localStorage
+            let playerName = document.getElementById("playerName").value;
+            if (playerName == "") {
+                alert("Silakan masukkan nama sebelum memulai!");
+                return;
+            }
+            let selectedCharacter = spritesheets[activeIndex];
+            localStorage.setItem("playerName", playerName);//name
+            localStorage.setItem("selectedCharacter", selectedCharacter);//char yg dipilih
+            localStorage.setItem("money", 100);//moneynya
+            localStorage.setItem("hours", "17"); 
+            localStorage.setItem("minutes", "0"); 
+            localStorage.setItem("day", 1); 
+            localStorage.setItem("weekDay", "Monday");
+            localStorage.setItem("canWalk", "false");
+            localStorage.setItem("bath", 50);
+            localStorage.setItem("hunger", 50);
+            localStorage.setItem("sleeps", 50);
+            localStorage.setItem("happy", 50);
+            localStorage.setItem("health", 100);
+            localStorage.removeItem("currentQuest");
+            window.location.href = "./indonesia.html";
+        });
+        setActive(activeIndex);
+    </script>
+    <script src="./main.js"></script>
+</body>
+
+<!-- ============================================================CREATE BY ERITO================================================================ -->
+</html>
